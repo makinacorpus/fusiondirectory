@@ -876,16 +876,13 @@ class user extends plugin
     }
 
     /* This only gets called when user is renaming himself */
-    $ldap= $this->config->get_ldap_link();
-    if ($this->dn != $this->new_dn){
+    $ldap = $this->config->get_ldap_link();
+    if ($this->dn != $this->new_dn) {
 
       /* Write entry on new 'dn' */
-      $this->update_acls($this->dn,$this->new_dn);
+      $this->update_acls($this->dn, $this->new_dn);
       $this->move($this->dn, $this->new_dn);
-
-      /* Happen to use the new one */
-      change_ui_dn($this->dn, $this->new_dn);
-      $this->dn= $this->new_dn;
+      $this->dn = $this->new_dn;
     }
 
 
@@ -893,9 +890,9 @@ class user extends plugin
        new entries. So do a check first... */
     $ldap->cat ($this->dn, array('dn'));
     if ($ldap->fetch()){
-      $mode= "modify";
+      $mode = "modify";
     } else {
-      $mode= "add";
+      $mode = "add";
       $ldap->cd($this->config->current['BASE']);
       $ldap->create_missing_trees(preg_replace('/^[^,]+,/', '', $this->dn));
     }
